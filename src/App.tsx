@@ -1,44 +1,50 @@
-import { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import React from 'react'
+import { lazy, Suspense } from 'react'
+import { Navigate, Route, Routes } from 'react-router-dom'
+
+const MyLayout = lazy(() => import('@/pages/Layout'))
+const NoMatch = lazy(() => import('@/pages/NoMatch'))
+const Home = lazy(() => import('@/pages/Home'))
+const About = lazy(() => import('@/pages/About'))
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
-    </div>
+    <Routes>
+      <Route
+        path='/'
+        element={
+          <Suspense fallback={null}>
+            <MyLayout />
+          </Suspense>
+        }
+      >
+        <Route index element={<Navigate to='/home' />} />
+        <Route
+          path='home'
+          element={
+            <Suspense fallback={null}>
+              <Home />
+            </Suspense>
+          }
+        />
+        <Route
+          path='about'
+          element={
+            <Suspense fallback={null}>
+              <About />
+            </Suspense>
+          }
+        />
+      </Route>
+      <Route
+        path='*'
+        element={
+          <Suspense fallback={null}>
+            <NoMatch />
+          </Suspense>
+        }
+      />
+    </Routes>
   )
 }
 

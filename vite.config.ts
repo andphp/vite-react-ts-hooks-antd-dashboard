@@ -1,15 +1,15 @@
 import reactRefresh from '@vitejs/plugin-react-refresh'
-import {viteMockServe} from 'vite-plugin-mock'
-import {resolve} from 'path';
+import { viteMockServe } from 'vite-plugin-mock'
+import { resolve } from 'path'
 import svgr from 'vite-plugin-svgr'
 
 function pathResolve(dir: string) {
-  return resolve(__dirname, '.', dir);
+  return resolve(__dirname, '.', dir)
 }
 
 // https://vitejs.dev/config/
 export default ({ command } : { command: string}) => {
-  console.log('command:',)
+  console.log('command:')
   return {
     resolve: {
       // alias: aliases,
@@ -17,20 +17,20 @@ export default ({ command } : { command: string}) => {
         {
           // /@/xxxx  =>  src/xxx
           find: /^~/,
-          replacement: pathResolve('node_modules') + '/',
+          replacement: pathResolve('node_modules') + '/'
         },
         {
           // /@/xxxx  =>  src/xxx
           find: /@\//,
-          replacement: pathResolve('src') + '/',
-        },
-      ],
+          replacement: pathResolve('src') + '/'
+        }
+      ]
     },
     optimizeDeps: {
       include: [
         '@ant-design/colors',
-        '@ant-design/icons',
-      ],
+        '@ant-design/icons'
+      ]
     },
     // server: {
     //   proxy: {
@@ -49,8 +49,8 @@ export default ({ command } : { command: string}) => {
         supportTs: true,
         watchFiles: true,
         localEnabled: command === 'serve',
-        logger: true,
-      }),
+        logger: true
+      })
       // styleImport({
       //   libs: [
       //     {
@@ -65,17 +65,17 @@ export default ({ command } : { command: string}) => {
     ],
     css: {
       modules: {
-        localsConvention: 'camelCaseOnly',
+        localsConvention: 'camelCaseOnly'
       },
       preprocessorOptions: {
         less: {
           javascriptEnabled: true,
           modifyVars: {
-            '@primary-color': '#1890ff',
-          },
-        },
-      },
-    },
+            '@primary-color': '#1890ff'
+          }
+        }
+      }
+    }
   }
 }
 
