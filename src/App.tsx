@@ -1,50 +1,57 @@
-import React from 'react'
-import { lazy, Suspense } from 'react'
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { localeConfig } from '@/configs/locale'
+import { ConfigProvider } from 'antd'
+import enUS from 'antd/es/locale/en_US'
+import zhCN from 'antd/es/locale/zh_CN'
+// import { createBrowserHistory } from 'history'
+import moment from 'moment'
+import 'moment/dist/locale/zh-cn'
+import React, { useEffect } from 'react'
+import { IntlProvider } from 'react-intl'
+import { BrowserRouter } from 'react-router-dom'
+import { useRecoilState } from 'recoil'
+import '@/styles/App.less'
+import RenderRouter from './routes'
+import { userState } from '@/atoms/user'
+// const history = createBrowserHistory()
 
-const MyLayout = lazy(() => import('@/pages/Layout'))
-const NoMatch = lazy(() => import('@/pages/NoMatch'))
-const Home = lazy(() => import('@/pages/Home'))
-const About = lazy(() => import('@/pages/About'))
+const App: React.FC = () => {
+  const [user, _] = useRecoilState(userState)
+  const { locale } = user
 
-function App() {
+  // const { data: currentUser } = useGetCurrentUser()
+
+  useEffect(() => {
+    if (locale.toLowerCase() === 'en-us') {
+      moment.locale('en')
+    } else if (locale.toLowerCase() === 'zh-cn') {
+      moment.locale('zh')
+    }
+  }, [locale])
+
+  const getAntdLocale = () => {
+    if (locale.toLowerCase() === 'en-us') {
+      return enUS
+    } else if (locale.toLowerCase() === 'zh-cn') {
+      return zhCN
+    }
+  }
+
+  const getLocale = () => {
+    const lang = localeConfig.find((item) => {
+      return item.key === locale.toLowerCase()
+    })
+
+    return lang?.messages
+  }
+
   return (
-    <Routes>
-      <Route
-        path='/'
-        element={
-          <Suspense fallback={null}>
-            <MyLayout />
-          </Suspense>
-        }
-      >
-        <Route index element={<Navigate to='/home' />} />
-        <Route
-          path='home'
-          element={
-            <Suspense fallback={null}>
-              <Home />
-            </Suspense>
-          }
-        />
-        <Route
-          path='about'
-          element={
-            <Suspense fallback={null}>
-              <About />
-            </Suspense>
-          }
-        />
-      </Route>
-      <Route
-        path='*'
-        element={
-          <Suspense fallback={null}>
-            <NoMatch />
-          </Suspense>
-        }
-      />
-    </Routes>
+    <ConfigProvider locale={getAntdLocale()} componentSize='middle'>
+      <IntlProvider locale={locale.split('-')[0]} messages={getLocale()}>
+        <BrowserRouter>
+          <RenderRouter />
+        </BrowserRouter>
+      </IntlProvider>
+    </ConfigProvider>
   )
 }
 

@@ -2,14 +2,16 @@ import reactRefresh from '@vitejs/plugin-react-refresh'
 import { viteMockServe } from 'vite-plugin-mock'
 import { resolve } from 'path'
 import svgr from 'vite-plugin-svgr'
+import styleImport from 'vite-plugin-style-import'
 
 function pathResolve(dir: string) {
   return resolve(__dirname, '.', dir)
 }
 
 // https://vitejs.dev/config/
-export default ({ command } : { command: string}) => {
+export default ({ command }: { command: string }) => {
   console.log('command:')
+  // @ts-ignore
   return {
     resolve: {
       // alias: aliases,
@@ -27,20 +29,17 @@ export default ({ command } : { command: string}) => {
       ]
     },
     optimizeDeps: {
-      include: [
-        '@ant-design/colors',
-        '@ant-design/icons'
-      ]
+      include: ['@ant-design/colors', '@ant-design/icons']
     },
-    // server: {
-    //   proxy: {
-    //     '/api': {
-    //       target: 'http://127.0.0.1:7770',
-    //       changeOrigin: true,
-    //       rewrite: path => path.replace(/^\/api/, '')
-    //     }
-    //   },
-    // },
+    server: {
+      proxy: {
+        '/api': {
+          target: 'http://127.0.0.1:9501',
+          changeOrigin: true,
+          rewrite: (path: string) => path.replace(/^\/api/, 'backend')
+        }
+      }
+    },
     plugins: [
       reactRefresh(),
       svgr(),
@@ -48,20 +47,21 @@ export default ({ command } : { command: string}) => {
         mockPath: 'mock',
         supportTs: true,
         watchFiles: true,
-        localEnabled: command === 'serve',
+        // localEnabled: command === 'serve',
+        localEnabled: false,
         logger: true
+      }),
+      styleImport({
+        libs: [
+          {
+            libraryName: 'antd',
+            esModule: true,
+            resolveStyle: (name: any) => {
+              return `antd/es/${name}/style/index`
+            }
+          }
+        ]
       })
-      // styleImport({
-      //   libs: [
-      //     {
-      //       libraryName: 'antd',
-      //       esModule: true,
-      //       resolveStyle: (name) => {
-      //         return `antd/es/${name}/style/index`;
-      //       },
-      //     },
-      //   ],
-      // }),
     ],
     css: {
       modules: {
@@ -78,4 +78,3 @@ export default ({ command } : { command: string}) => {
     }
   }
 }
-
