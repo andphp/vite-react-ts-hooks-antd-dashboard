@@ -1,0 +1,15 @@
+{
+  "login": {
+    "code": 0,
+    "msg": "Successful！",
+    "data": {
+      "accessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0Ojk1MDEvYmFja2VuZC9sb2dpbiIsImlhdCI6MTY1NDc4MDE1OCwiZXhwIjoxNjU0NzgzNzU4LCJuYmYiOjE2NTQ3ODAxNTgsImp0aSI6IjZvdXg0VHF1RDVRSHZNTjYiLCJzdWIiOiIxIiwicHJ2IjoiMGMxNGNhMDdlMzVhYTlkMzFlZDJhZDA1YjI1ZmVlYmE5MDA1MWNkYSIsImlkIjoxLCJhY2NvdW50X25hbWUiOiJhZG1pbiJ9.nV9HRRCjNEkSBB2um26zMYs29H_vR2k8Ab-tVTqjjQIzaU7nm6g9SeRTN5tsWi4tfprDZccB1m7OIkK7uLltaw",
+      "expireToken": 3600,
+      "userInfo": {
+        "id": 1,
+        "accountName": "admin",
+        "status": 0
+      }
+    }
+  }
+}
