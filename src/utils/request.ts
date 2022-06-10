@@ -28,8 +28,10 @@ const axios = Axios.create({
 })
 
 axios.interceptors.request.use((config: AxiosRequestConfig) => {
+  Storage.set('accessToken','eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0Ojk1MDEvYmFja2VuZC9sb2dpbiIsImlhdCI6MTY1NDgzOTk2MywiZXhwIjoxNjU0ODQzNTYzLCJuYmYiOjE2NTQ4Mzk5NjMsImp0aSI6Im11WnZlbHgyQ1NqZjJWeUkiLCJzdWIiOiIxIiwicHJ2IjoiMGMxNGNhMDdlMzVhYTlkMzFlZDJhZDA1YjI1ZmVlYmE5MDA1MWNkYSIsImlkIjoxLCJhY2NvdW50X25hbWUiOiJhZG1pbiJ9.Qe1BASgGarg8IBbFT7ljTe1CitDnvRLLr-rbLq-mJCxAU0QZ2F1r-eFyWlCniecxuR7k3xzRwDxsN37hu5I1cQ')
   const token = Storage.get('accessToken', false)
   if (token) {
+    // config.headers = { Authorization: `Bearer ${token}` }
     config.headers = { Authorization: `Bearer ${token}` }
     // config.headers = { 'x-token': token }
   }

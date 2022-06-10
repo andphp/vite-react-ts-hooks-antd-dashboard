@@ -8,7 +8,7 @@ import { useOutlet, useNavigate, useLocation, generatePath, useParams, Params } 
 import { ArrowsAltOutlined, ShrinkOutlined, VerticalRightOutlined, VerticalLeftOutlined, ColumnWidthOutlined, RedoOutlined, SmallDashOutlined } from '@ant-design/icons'
 import { PageLoading } from '@ant-design/pro-layout'
 import { useGetCurrentMenus } from '@/https/common'
-import { GetMenuListState, SetMenuListState } from '@/atoms/menu'
+import { GetMenuListState, SetMenuListState } from '@/stores/atoms/menu'
 import { useLocale } from '@/locales'
 
 const { TabPane } = Tabs

@@ -2,7 +2,7 @@ import React, {FC} from 'react'
 
 import Welcome from '@/pages/dashboard/welcome'
 import LoginPage from '@/pages/login'
-import LayoutPage from '@/components/layout'
+import LayoutPage from '@/layout'
 import WrapperRouteComponent from './config'
 import {RouteObject, useRoutes} from 'react-router-dom'
 // import {Spin} from 'antd'

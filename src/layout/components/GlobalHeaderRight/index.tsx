@@ -8,7 +8,7 @@ import HeaderSearch from '../HeaderSearch'
 // import "./index.less";
 import classes from './index.module.less'
 import { useRecoilValue } from 'recoil'
-import { userState } from '@/atoms/user'
+import { userState } from '@/stores/atoms/user'
 import SelectLang from './SelectLang'
 
 import screenfull from 'screenfull'

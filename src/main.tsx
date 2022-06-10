@@ -1,5 +1,5 @@
 import React, { Suspense, useMemo } from 'react'
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom/client'
 import { QueryClient, QueryClientProvider } from 'react-query'
 // import { ReactQueryDevtools } from 'react-query-devtools'
 import { RecoilRoot } from 'recoil'
@@ -32,8 +32,9 @@ const AxiosProvider = ({ children }: React.PropsWithChildren<unknown>) => {
 
   return <AxiosContext.Provider value={axiosValue}>{children}</AxiosContext.Provider>
 }
-
-ReactDOM.render(
+const rootElement =   document.getElementById('root');
+if (!rootElement) throw new Error("Failed to find the root element");
+ReactDOM.createRoot(rootElement).render(
   // <React.StrictMode>
   <AxiosProvider>
     <QueryClientProvider client={queryClient}>
@@ -54,7 +55,6 @@ ReactDOM.render(
         </ErrorBoundary>
       </RecoilRoot>
     </QueryClientProvider>
-  </AxiosProvider>,
+  </AxiosProvider>
   // </React.StrictMode>,
-  document.getElementById('root')
 )

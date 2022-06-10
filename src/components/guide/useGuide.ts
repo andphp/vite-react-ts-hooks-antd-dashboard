@@ -5,7 +5,7 @@ import './index.less'
 import { useLocale } from '@/locales'
 
 import { useRecoilState } from 'recoil'
-import { userState } from '@/atoms/user'
+import { userState } from '@/stores/atoms/user'
 
 export const useGuide = () => {
   const { formatMessage } = useLocale()

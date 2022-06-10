@@ -11,7 +11,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import '@/styles/App.less'
 import RenderRouter from './routes'
-import { userState } from '@/atoms/user'
+import { userState } from '@/stores/atoms/user'
 // const history = createBrowserHistory()
 
 const App: React.FC = () => {

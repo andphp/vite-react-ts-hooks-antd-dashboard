@@ -1,8 +1,7 @@
 import reactRefresh from '@vitejs/plugin-react-refresh'
-import { viteMockServe } from 'vite-plugin-mock'
-import { resolve } from 'path'
+import {resolve} from 'path'
 import svgr from 'vite-plugin-svgr'
-import styleImport from 'vite-plugin-style-import'
+import {createStyleImportPlugin} from 'vite-plugin-style-import'
 
 function pathResolve(dir: string) {
   return resolve(__dirname, '.', dir)
@@ -43,20 +42,20 @@ export default ({ command }: { command: string }) => {
     plugins: [
       reactRefresh(),
       svgr(),
-      viteMockServe({
-        mockPath: 'mock',
-        supportTs: true,
-        watchFiles: true,
-        // localEnabled: command === 'serve',
-        localEnabled: false,
-        logger: true
-      }),
-      styleImport({
+      // viteMockServe({
+      //   mockPath: 'mock',
+      //   supportTs: true,
+      //   watchFiles: true,
+      //   // localEnabled: command === 'serve',
+      //   localEnabled: false,
+      //   logger: true
+      // }),
+      createStyleImportPlugin({
         libs: [
           {
             libraryName: 'antd',
             esModule: true,
-            resolveStyle: (name: any) => {
+            resolveStyle: (name: string) => {
               return `antd/es/${name}/style/index`
             }
           }

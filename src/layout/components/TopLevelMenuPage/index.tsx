@@ -1,4 +1,4 @@
-import { useGetCurrentMenus } from '@/https'
+import { useGetCurrentMenus } from '@/https/common'
 import { useLocale } from '@/locales'
 import { Divider, Row } from 'antd'
 import React, { Fragment } from 'react'
@@ -13,7 +13,7 @@ const TopLevelMenuPage: React.FC<TopLevelMenuPageProps> = ({ frompath }) => {
   const { data: menuList } = useGetCurrentMenus()
   const loopMenuItem = () => {
     if (!menuList) return []
-    const currentMenu = menuList.filter((menu) => menu.path.toLowerCase() === frompath && menu?.children?.length)
+    const currentMenu = menuList.filter((menu: Menu.Tree) => menu.path.toLowerCase() === frompath && menu?.children?.length)
     return currentMenu[0]?.children ?? []
   }
   const secondMenu: {

@@ -20,7 +20,7 @@
       "@/*": ["./src/*"],
       "components/*": ["./src/components/*"]
     },
-    "types": ["vite/client","node"],
+    "types": ["vite/client","node","react/next", "react-dom/next", "src/declares", "node_modules/@types"],
     "noUnusedLocals": true,
   },
   "include": ["./", "mock/**/*.ts", "src/**/*", "config/**/*", "./vite.config.ts"],
