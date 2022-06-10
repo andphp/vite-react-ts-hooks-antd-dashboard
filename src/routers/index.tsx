@@ -1,16 +1,16 @@
-import React, {FC} from 'react'
+import React, { FC } from 'react'
 
 import Welcome from '@/pages/dashboard/welcome'
 import LoginPage from '@/pages/login'
-import LayoutPage from '@/layout'
+import LayoutPage from '@/layouts'
 import WrapperRouteComponent from './config'
-import {RouteObject, useRoutes} from 'react-router-dom'
+import { RouteObject, useRoutes } from 'react-router-dom'
 // import {Spin} from 'antd'
 import NotFound from '@/pages/exception/404'
 import NProgressWithNode from '@/components/nProgress'
 
 // const lazyLoad = (children: ReactNode): ReactNode => {
-//   return <Suspense fallback={<Spin size='large' tip={`努力加载中...`} />}>{children}</Suspense>
+//   return <Suspense fallback={<Spin />}>{children}</Suspense>
 // }
 
 const routeList: RouteObject[] = [
@@ -45,7 +45,7 @@ const routeList: RouteObject[] = [
 const RenderRouter: FC = () => {
   const element = useRoutes(routeList)
 
-  return <NProgressWithNode element={element}  path='/dashboard/welcome'/>
+  return <NProgressWithNode element={element} path='/dashboard/welcome'/>
 }
 
 export default RenderRouter

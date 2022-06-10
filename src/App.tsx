@@ -10,7 +10,7 @@ import { IntlProvider } from 'react-intl'
 import { BrowserRouter } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import '@/styles/App.less'
-import RenderRouter from './routes'
+import RenderRouter from './routers'
 import { userState } from '@/stores/atoms/user'
 // const history = createBrowserHistory()
 

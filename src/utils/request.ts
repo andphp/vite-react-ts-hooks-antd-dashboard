@@ -8,6 +8,7 @@ import { useMutation, useQuery } from 'react-query'
 import { JsonToSnake } from './func'
 
 import Storage from './storage'
+import config from '@/configs'
 
 enum ResultCode {
   SUCCESS,
@@ -18,9 +19,9 @@ enum ResultCode {
 
 const history = createBrowserHistory()
 // const navigate = useNavigate()
-// console.log('baseurl:', import.meta.env.VITE_BASE_URL)
+// console.log('baseurl:', config.baseURL)
 const axios = Axios.create({
-  baseURL: String(import.meta.env.VITE_BASE_URL),
+  baseURL: String(config.baseURL),
   timeout: 5000,
   headers: {
     'Content-Type': 'application/x-www-form-urlencoded'
@@ -28,20 +29,21 @@ const axios = Axios.create({
 })
 
 axios.interceptors.request.use((config: AxiosRequestConfig) => {
-  Storage.set('accessToken','eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0Ojk1MDEvYmFja2VuZC9sb2dpbiIsImlhdCI6MTY1NDgzOTk2MywiZXhwIjoxNjU0ODQzNTYzLCJuYmYiOjE2NTQ4Mzk5NjMsImp0aSI6Im11WnZlbHgyQ1NqZjJWeUkiLCJzdWIiOiIxIiwicHJ2IjoiMGMxNGNhMDdlMzVhYTlkMzFlZDJhZDA1YjI1ZmVlYmE5MDA1MWNkYSIsImlkIjoxLCJhY2NvdW50X25hbWUiOiJhZG1pbiJ9.Qe1BASgGarg8IBbFT7ljTe1CitDnvRLLr-rbLq-mJCxAU0QZ2F1r-eFyWlCniecxuR7k3xzRwDxsN37hu5I1cQ')
+  Storage.set('accessToken', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0Ojk1MDEvYmFja2VuZC9sb2dpbiIsImlhdCI6MTY1NDgzOTk2MywiZXhwIjoxNjU0ODQzNTYzLCJuYmYiOjE2NTQ4Mzk5NjMsImp0aSI6Im11WnZlbHgyQ1NqZjJWeUkiLCJzdWIiOiIxIiwicHJ2IjoiMGMxNGNhMDdlMzVhYTlkMzFlZDJhZDA1YjI1ZmVlYmE5MDA1MWNkYSIsImlkIjoxLCJhY2NvdW50X25hbWUiOiJhZG1pbiJ9.Qe1BASgGarg8IBbFT7ljTe1CitDnvRLLr-rbLq-mJCxAU0QZ2F1r-eFyWlCniecxuR7k3xzRwDxsN37hu5I1cQ')
   const token = Storage.get('accessToken', false)
   if (token) {
     // config.headers = { Authorization: `Bearer ${token}` }
     config.headers = { Authorization: `Bearer ${token}` }
     // config.headers = { 'x-token': token }
   }
+
   // 每次请求带上时间戳 防刷处理
   if (config.method === 'get') {
-      config.params = {
-          ...config.params,
-          // @ts-ignore
-          timestamp: Date.parse(new Date()) / 1000
-      };
+    config.params = {
+      ...config.params,
+      // @ts-ignore
+      timestamp: Date.parse(new Date()) / 1000
+    }
   }
   return config
 }, (error: any) => {
@@ -94,8 +96,8 @@ axios.interceptors.response.use(
       switch (error.response.status) {
         // 403 token过期
         // 401: 未登录
-          // 未登录则跳转登录页面，并携带当前页面的路径
-          // 在登录成功后返回当前页面，这一步需要在登录页操作。
+        // 未登录则跳转登录页面，并携带当前页面的路径
+        // 在登录成功后返回当前页面，这一步需要在登录页操作。
         case 403 | 401:
           Storage.remove('accessToken')
           notification.error({
