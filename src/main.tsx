@@ -35,7 +35,7 @@ const AxiosProvider = ({ children }: React.PropsWithChildren<unknown>) => {
 const rootElement = document.getElementById('root')
 if (!rootElement) throw new Error('Failed to find the root element')
 ReactDOM.createRoot(rootElement).render(
-  // <React.StrictMode>
+  <React.StrictMode>
   <AxiosProvider>
     <QueryClientProvider client={queryClient}>
       <RecoilRoot>
@@ -56,5 +56,5 @@ ReactDOM.createRoot(rootElement).render(
       </RecoilRoot>
     </QueryClientProvider>
   </AxiosProvider>
-  // </React.StrictMode>,
+   </React.StrictMode>,
 )

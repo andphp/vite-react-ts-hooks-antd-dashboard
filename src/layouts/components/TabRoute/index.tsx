@@ -7,7 +7,7 @@ import { useMemoizedFn, useCreation } from 'ahooks'
 import { useOutlet, useNavigate, useLocation, generatePath, useParams, Params } from 'react-router-dom'
 import { ArrowsAltOutlined, ShrinkOutlined, VerticalRightOutlined, VerticalLeftOutlined, ColumnWidthOutlined, RedoOutlined, SmallDashOutlined } from '@ant-design/icons'
 import { PageLoading } from '@ant-design/pro-layout'
-import { useGetCurrentMenus } from '@/https/common'
+import { useGetCurrentMenus } from '@/https'
 import { GetMenuListState, SetMenuListState } from '@/stores/atoms/menu'
 import { useLocale } from '@/locales'
 
@@ -40,6 +40,7 @@ const TabRoute = function(clickChangeMaximize: React.MouseEventHandler<HTMLEleme
     return false
   }
 
+  console.log('TabRoute', location.pathname)
   // 初始化菜单路由
   const { data: menuList } = useGetCurrentMenus()
   // 确保tab

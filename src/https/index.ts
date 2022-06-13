@@ -1,6 +1,9 @@
-import {useGetList, useGetOne} from '@/utils/request'
+import {useCreate, useGetList, useGetOne} from '@/utils/request'
 
 // 公共接口
+export const useLogin = () => {
+    return useCreate<Sign.LoginParams, Sign.LoginResultData>('/login')
+}
 
 export const useGetCurrentUser = () => {
     return useGetOne<User.CurrentUser>('CurrentUser', '/current/user')

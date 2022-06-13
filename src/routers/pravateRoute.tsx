@@ -1,6 +1,6 @@
 import React, {FC} from 'react'
 import {Navigate, RouteProps} from 'react-router-dom'
-import {Logged} from '@/utils'
+import {Logged} from '@/utils/helper'
 
 
 const PrivateRoute: FC<RouteProps> = ({ children, ...props }) => {

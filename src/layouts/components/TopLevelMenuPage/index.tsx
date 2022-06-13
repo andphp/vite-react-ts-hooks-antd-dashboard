@@ -1,4 +1,4 @@
-import { useGetCurrentMenus } from '@/https/common'
+import { useGetCurrentMenus } from '@/https'
 import { useLocale } from '@/locales'
 import { Divider, Row } from 'antd'
 import React, { Fragment } from 'react'

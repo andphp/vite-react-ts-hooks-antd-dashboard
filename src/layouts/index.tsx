@@ -1,20 +1,20 @@
-import { useGetCurrentMenus, useGetCurrentUser } from '@/https/common'
+import { useGetCurrentMenus, useGetCurrentUser } from '@/https'
 import { useLocale } from '@/locales'
 import { userState } from '@/stores/atoms/user'
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import type { MenuDataItem } from '@ant-design/pro-layout'
 import ProLayout from '@ant-design/pro-layout'
-import { createBrowserHistory } from 'history'
-import React, { FC, ReactNode, useEffect, useState } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
-import { useGuide } from 'components/guide/useGuide'
+import {createBrowserHistory} from 'history'
+import React, {FC, ReactNode, useEffect, useState} from 'react'
+import {Link, useLocation, useNavigate} from 'react-router-dom'
+import {useRecoilState} from 'recoil'
+import {useGuide} from '@/components/guide/useGuide'
 import GlobalHeaderRight from './components/GlobalHeaderRight'
 import TabRoute from './components/TabRoute'
 import styles from './index.module.less'
-import Icon from 'components/icon'
+import Icon from '@/components/icon'
 import logoPic from '@/assets/images/logo_min.png'
-import { Logged } from '@/utils'
+import {Logged} from '@/utils/helper'
 
 const history = createBrowserHistory()
 
@@ -49,7 +49,7 @@ const LayoutPage: FC = () => {
       })
     }
   }, [menuList])
-
+  console.log('777777777777', location.pathname)
   useEffect(() => {
     if (currentUser) {
       setUser({ ...user, username: currentUser?.fullName || currentUser?.nickName || currentUser?.accountName || '', logged: true })

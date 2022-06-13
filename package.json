@@ -7,7 +7,7 @@
     "build:tsc": "tsc && vite build",
     "preview": "vite preview",
     "format": "prettier --write **/*.{js,ts,tsx} && eslint . --ext js,ts,tsx --fix",
-    "json-mock": "json-server --config __json_server_mock__/config.json  __json_server_mock__/db.json"
+    "json-mock": "json-server --config __json_server_mock__/config.json __json_server_mock__/mock.js"
   },
   "dependencies": {
     "@ant-design/charts": "^1.3.6",
