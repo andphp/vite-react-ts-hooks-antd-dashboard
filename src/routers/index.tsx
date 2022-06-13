@@ -4,7 +4,7 @@ import Welcome from '@/pages/dashboard/welcome'
 import LoginPage from '@/pages/login'
 import LayoutPage from '@/layouts'
 import WrapperRouteComponent from './config'
-import { RouteObject, useRoutes } from 'react-router-dom'
+import {Outlet, RouteObject, useRoutes} from 'react-router-dom'
 // import {Spin} from 'antd'
 import NotFound from '@/pages/exception/404'
 import NProgressWithNode from '@/components/nProgress'
@@ -20,7 +20,7 @@ const routeList: RouteObject[] = [
     children: [
       {
         path: '/dashboard',
-        element: <WrapperRouteComponent auth={true} path='/dashboard' children={<LayoutPage />}/>,
+        element: <WrapperRouteComponent auth={true} path='/dashboard' children={<Outlet />}/>,
         children: [{
           path: 'welcome',
           element: <Welcome key='/dashboard/welcome' />
