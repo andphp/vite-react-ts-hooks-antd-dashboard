@@ -22,7 +22,7 @@ const TopLevelMenuPage: React.FC<TopLevelMenuPageProps> = ({ frompath }) => {
     locale?: string
     icon?: string
   }[] = []
-  const tertiaryLoopMenuItem = loopMenuItem().map((menuItem) => {
+  const tertiaryLoopMenuItem = loopMenuItem().map((menuItem:Menu.Tree) => {
     if (menuItem.children?.length) {
       return (
         <Fragment key={`SelectMenuCard` + menuItem.path}>

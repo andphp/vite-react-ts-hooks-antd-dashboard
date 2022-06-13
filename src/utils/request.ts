@@ -91,14 +91,22 @@ axios.interceptors.response.use(
     return Promise.reject(new Error(response.statusText || 'Error'))
   },
   (error: { response: { status: number; data: { msg: any; data: any } } }) => {
-    // console.log('err:', error, error.response) // for debug
     if (error.response?.status) {
       switch (error.response.status) {
         // 403 token过期
         // 401: 未登录
         // 未登录则跳转登录页面，并携带当前页面的路径
         // 在登录成功后返回当前页面，这一步需要在登录页操作。
-        case 403 | 401:
+        case 401:
+          Storage.remove('accessToken')
+          notification.error({
+            message: error.response.data?.msg || 'Error',
+            description: error.response.data?.data || 'Error'
+          })
+          history.push('/login')
+          setTimeout(() => window.location.reload(), 2000)
+          break
+        case 403:
           Storage.remove('accessToken')
           notification.error({
             message: error.response.data?.msg || 'Error',

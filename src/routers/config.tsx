@@ -1,18 +1,23 @@
-import React, {FC} from 'react';
-import {RouteProps} from 'react-router';
-import PrivateRoute from './pravateRoute';
+import React, { FC } from 'react'
+import { RouteProps } from 'react-router'
+import PrivateRoute from './pravateRoute'
+import TopLevelMenuPage from '@/layouts/components/TopLevelMenuPage'
 
 export interface WrapperRouteProps extends RouteProps {
   /** authorization？ */
-  auth?: boolean;
+  auth?: boolean
+  path: string
+  page?: boolean
 }
 
-const WrapperRouteComponent: FC<WrapperRouteProps> = ({ auth, children }) => {
-
-  if (auth) {
-    return <PrivateRoute>{children}</PrivateRoute>;
+const WrapperRouteComponent: FC<WrapperRouteProps> = ({ auth, path, page, children }) => {
+  if (path.split('/').length - 1 === 1 && !page && location.pathname === path) {
+    return <TopLevelMenuPage frompath={path} />
   }
-  return <>{children}</>;
-};
+  if (auth) {
+    return <PrivateRoute>{children}</PrivateRoute>
+  }
+  return <>{children}</>
+}
 
-export default WrapperRouteComponent;
+export default WrapperRouteComponent
