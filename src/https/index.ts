@@ -10,7 +10,7 @@ export const useGetCurrentUser = () => {
 }
 
 export const useGetCurrentMenus = () => {
-  const menus = useGetList<Menu.MenuTree>('CurrentMenuList', '/current/menu')
+  const menus = useGetList<Menu.Tree>('CurrentMenuList', '/current/menu')
   console.log('=========menus', menus)
   return menus
 }

@@ -31,7 +31,7 @@ declare namespace Menu {
     key: number
   }
 
-  export interface Tree extends Item {
+  export interface TreeItem extends Item {
     /** 子菜单 */
     children: TreeChild[],
     locale?: string,
@@ -42,7 +42,7 @@ declare namespace Menu {
     }
   }
 
-  export type MenuTree = Tree[]
+  export type Tree = TreeItem[]
 
 
 }

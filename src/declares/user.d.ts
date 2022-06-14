@@ -30,7 +30,7 @@ declare namespace User {
 
   export interface CurrentUser extends Item{
     /** menu list for init tagsView */
-    menuList: Menu.MenuTree[]
+    menuList: Menu.Tree[]
     /** login status */
     logged: boolean
     /** user's device */

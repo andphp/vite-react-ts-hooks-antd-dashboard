@@ -13,16 +13,17 @@ const TopLevelMenuPage: React.FC<TopLevelMenuPageProps> = ({ frompath }) => {
   const { data: menuList } = useGetCurrentMenus()
   const loopMenuItem = () => {
     if (!menuList) return []
-    const currentMenu = menuList.filter((menu: Menu.Tree) => menu.path.toLowerCase() === frompath && menu?.children?.length)
+    const currentMenu = menuList.filter((menu: Menu.TreeItem) => menu.path.toLowerCase() === frompath && menu?.children?.length)
     return currentMenu[0]?.children ?? []
   }
   const secondMenu: {
+    id: number
     path: string
     name: string
     locale?: string
     icon?: string
   }[] = []
-  const tertiaryLoopMenuItem = loopMenuItem().map((menuItem:Menu.Tree) => {
+  const tertiaryLoopMenuItem = loopMenuItem().map((menuItem:Menu.TreeItem) => {
     if (menuItem.children?.length) {
       return (
         <Fragment key={`SelectMenuCard` + menuItem.path}>
@@ -43,7 +44,7 @@ const TopLevelMenuPage: React.FC<TopLevelMenuPageProps> = ({ frompath }) => {
     <Fragment key={`SelectMenuCardOther`}>
       <Row gutter={[24, { xs: 12, sm: 24 }]}>
         {secondMenu.map((menuItem) => {
-          return <SelectMenuCard key={`SelectMenuCardOther` + menuItem.path} title={menuItem.locale ? formatMessage({ id: menuItem.locale }) : menuItem.name} path={menuItem.path} />
+          return <SelectMenuCard key={`SelectMenuCardOther` + menuItem.path + menuItem.id} title={menuItem.locale ? formatMessage({ id: menuItem.locale }) : menuItem.name} path={menuItem.path} />
         })}
       </Row>
     </Fragment>
