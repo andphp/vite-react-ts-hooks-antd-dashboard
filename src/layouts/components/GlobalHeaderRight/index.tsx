@@ -1,14 +1,14 @@
-import { Space, Menu, Button } from 'antd'
-import {QuestionCircleOutlined, FullscreenExitOutlined, FullscreenOutlined, LogoutOutlined} from '@ant-design/icons'
-import React, { useState, useEffect } from 'react'
+import {Button, Menu, Space} from 'antd'
+import {FullscreenExitOutlined, FullscreenOutlined, QuestionCircleOutlined} from '@ant-design/icons'
+import React, {useEffect, useState} from 'react'
 
 import Avatar from './AvatarDropdown'
 import HeaderDropdown from '../HeaderDropdown'
 import HeaderSearch from '../HeaderSearch'
 // import "./index.less";
 import classes from './index.module.less'
-import { useRecoilValue } from 'recoil'
-import { userState } from '@/stores/atoms/user'
+import {useRecoilValue} from 'recoil'
+import {userState} from '@/stores/atoms/user'
 import SelectLang from './SelectLang'
 
 import screenfull from 'screenfull'

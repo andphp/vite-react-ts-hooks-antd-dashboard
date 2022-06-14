@@ -31,6 +31,11 @@ const HeaderSearch: React.FC<HeaderSearchProps> = (props) => {
     onChange: props.onChange
   })
 
+  //setValue
+  const handleChange = (value: string) => {
+    setValue(value)
+  }
+
   const [searchMode, setSearchMode] = useMergedState(defaultVisible ?? false, {
     value: props.visible,
     onChange: onVisibleChange
@@ -62,7 +67,7 @@ const HeaderSearch: React.FC<HeaderSearchProps> = (props) => {
           cursor: 'pointer'
         }}
       />
-      <AutoComplete key='AutoComplete' className={inputClass} value={value} options={restProps.options} onChange={setValue}>
+      <AutoComplete key='AutoComplete' className={inputClass} value={value} options={restProps.options} onChange={handleChange}>
         <Input
           size='small'
           ref={inputRef}
