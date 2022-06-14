@@ -1,14 +1,14 @@
-import {Button, Menu, Space} from 'antd'
-import {FullscreenExitOutlined, FullscreenOutlined, QuestionCircleOutlined} from '@ant-design/icons'
-import React, {useEffect, useState} from 'react'
+import { Button, Menu, Space } from 'antd'
+import { FullscreenExitOutlined, FullscreenOutlined, QuestionCircleOutlined } from '@ant-design/icons'
+import React, { useEffect, useState } from 'react'
 
 import Avatar from './AvatarDropdown'
 import HeaderDropdown from '../HeaderDropdown'
 import HeaderSearch from '../HeaderSearch'
 // import "./index.less";
 import classes from './index.module.less'
-import {useRecoilValue} from 'recoil'
-import {userState} from '@/stores/atoms/user'
+import { useRecoilValue } from 'recoil'
+import { userState } from '@/stores/atoms/user'
 import SelectLang from './SelectLang'
 
 import screenfull from 'screenfull'
@@ -49,22 +49,22 @@ const GlobalHeaderRight: React.FC = () => {
       document.removeEventListener('MSFullscreenChange', escFunction)
     }
   })
-    const headerDropdownConfig = [
-        {
-            label: '文档',
-            key: 'wendang1',
-            onClick:() => {
-                 window.open('/~docs')
-            }
-        },
-        {
-            label: 'Ant Design Pro 文档',
-            key: 'wendang2',
-            onClick:() => {
-                window.open('https://pro.ant.design/docs/getting-started')
-            }
-        }
-    ]
+  const headerDropdownConfig = [
+    {
+      label: '文档',
+      key: 'wendang1',
+      onClick: () => {
+        window.open('/~docs')
+      }
+    },
+    {
+      label: 'Ant Design Pro 文档',
+      key: 'wendang2',
+      onClick: () => {
+        window.open('https://pro.ant.design/docs/getting-started')
+      }
+    }
+  ]
   return (
     <Space className={className}>
       <HeaderSearch

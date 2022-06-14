@@ -1,13 +1,13 @@
-import React, {useCallback} from 'react'
-import {useLocation, useNavigate} from 'react-router-dom'
+import React, { useCallback } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 
-import {LogoutOutlined} from '@ant-design/icons'
-import {Avatar, Menu, Spin} from 'antd'
+import { LogoutOutlined } from '@ant-design/icons'
+import { Avatar, Menu, Spin } from 'antd'
 
 import HeaderDropdown from '../HeaderDropdown'
 import classes from './index.module.less'
-import {useRecoilState} from 'recoil'
-import {userState} from '@/stores/atoms/user'
+import { useRecoilState } from 'recoil'
+import { userState } from '@/stores/atoms/user'
 import Storage from '@/utils/storage'
 
 export interface GlobalHeaderRightProps {
@@ -66,21 +66,20 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
     return loading
   }
 
-    const menuHeaderConfig = [
-        {
-            label: '个人信息',
-            key: 'userinfo',
-            icon: <LogoutOutlined />
-        },
-        {
-            label: '退出登录',
-            key: 'logout',
-            icon: <LogoutOutlined />
-        }
-    ]
+  const menuHeaderConfig = [
+    {
+      label: '个人信息',
+      key: 'userinfo',
+      icon: <LogoutOutlined />
+    },
+    {
+      label: '退出登录',
+      key: 'logout',
+      icon: <LogoutOutlined />
+    }
+  ]
 
-
-    const menuHeaderDropdown = (
+  const menuHeaderDropdown = (
     <Menu className={'menu'} selectedKeys={[]} onClick={onMenuClick} items={menuHeaderConfig} />
   )
   return (

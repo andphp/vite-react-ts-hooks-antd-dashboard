@@ -10,6 +10,7 @@ import { PageLoading } from '@ant-design/pro-layout'
 import { useGetCurrentMenus } from '@/https'
 import { GetMenuListState, SetMenuListState } from '@/stores/atoms/menu'
 import { useLocale } from '@/locales'
+import styles from './index.module.less'
 
 const { TabPane } = Tabs
 const getTabPath = (tab: { location: { pathname: string }; params: Params<string> | undefined }) => generatePath(tab.location.pathname, tab.params)
@@ -269,15 +270,15 @@ const TabRoute = function(clickChangeMaximize: React.MouseEventHandler<HTMLEleme
   })
 
   return (
-      <div style={{position:'relative',width:'100%'}}>
-        <Tabs id={tabsDivId.current} activeKey={location.pathname} onChange={(key) => selectTab(key)} tabBarExtraContent={operations} tabBarStyle={{ background: '#fff', margin: '0' }} tabPosition='top' animated tabBarGutter={0} hideAdd type='editable-card' onEdit={(targetKey) => closeTab(targetKey)}>
-          {[...tabList.current.values()].map((item) => (
-              <TabPane style={{ padding: '16px 0 0 16px' }} tab={item.name} key={item.key}>
-                <Suspense fallback={<PageLoading />}>{reload ? <PageLoading /> : item.page}</Suspense>
-              </TabPane>
-          ))}
-        </Tabs>
-      </div>
+    <div className={styles.tab}>
+      <Tabs id={tabsDivId.current} className={styles.antTabsContent} activeKey={location.pathname} onChange={(key) => selectTab(key)} tabBarExtraContent={operations} tabBarStyle={{ background: '#fff', margin: '0' }} tabPosition='top' animated tabBarGutter={0} hideAdd type='editable-card' onEdit={(targetKey) => closeTab(targetKey)}>
+        {[...tabList.current.values()].map((item) => (
+          <TabPane style={{ padding: '16px 0 0 16px' }} tab={item.name} key={item.key}>
+            <Suspense fallback={<PageLoading />}>{reload ? <PageLoading /> : item.page}</Suspense>
+          </TabPane>
+        ))}
+      </Tabs>
+    </div>
 
   )
 }
