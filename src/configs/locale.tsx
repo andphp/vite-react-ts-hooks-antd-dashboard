@@ -8,13 +8,13 @@ import zhCN from '@/locales/zh-cn'
 
 export const localeConfig = [
   {
-    name: 'English',
+    label: 'English',
     key: 'en-us',
     messages: enUS,
     icon: <EnUsSvg />
   },
   {
-    name: '简体中文',
+    label: '简体中文',
     key: 'zh-cn',
     messages: zhCN,
     icon: <ZhCnSvg />

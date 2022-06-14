@@ -1,13 +1,13 @@
-import React, { useCallback } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import React, {useCallback} from 'react'
+import {useLocation, useNavigate} from 'react-router-dom'
 
-import { LogoutOutlined } from '@ant-design/icons'
-import { Avatar, Menu, Spin } from 'antd'
+import {LogoutOutlined} from '@ant-design/icons'
+import {Avatar, Menu, Spin} from 'antd'
 
 import HeaderDropdown from '../HeaderDropdown'
 import classes from './index.module.less'
-import { useRecoilState } from 'recoil'
-import { userState } from '@/stores/atoms/user'
+import {useRecoilState} from 'recoil'
+import {userState} from '@/stores/atoms/user'
 import Storage from '@/utils/storage'
 
 export interface GlobalHeaderRightProps {
@@ -35,7 +35,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
   }
 
   const onMenuClick = useCallback(
-    (event) => {
+    (event: { key: any }) => {
       const { key } = event
       if (key === 'logout') {
         loginOut()
@@ -66,17 +66,22 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
     return loading
   }
 
-  const menuHeaderDropdown = (
-    <Menu className={'menu'} selectedKeys={[]} onClick={onMenuClick}>
-      <Menu.Item key='userinfo'>
-        <LogoutOutlined />
-        个人信息
-      </Menu.Item>
-      <Menu.Item key='logout'>
-        <LogoutOutlined />
-        退出登录
-      </Menu.Item>
-    </Menu>
+    const menuHeaderConfig = [
+        {
+            label: '个人信息',
+            key: 'userinfo',
+            icon: <LogoutOutlined />
+        },
+        {
+            label: '退出登录',
+            key: 'logout',
+            icon: <LogoutOutlined />
+        }
+    ]
+
+
+    const menuHeaderDropdown = (
+    <Menu className={'menu'} selectedKeys={[]} onClick={onMenuClick} items={menuHeaderConfig} />
   )
   return (
     <HeaderDropdown overlay={menuHeaderDropdown}>

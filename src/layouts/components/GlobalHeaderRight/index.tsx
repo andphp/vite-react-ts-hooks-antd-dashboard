@@ -1,5 +1,5 @@
 import { Space, Menu, Button } from 'antd'
-import { QuestionCircleOutlined, FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons'
+import {QuestionCircleOutlined, FullscreenExitOutlined, FullscreenOutlined, LogoutOutlined} from '@ant-design/icons'
 import React, { useState, useEffect } from 'react'
 
 import Avatar from './AvatarDropdown'
@@ -49,7 +49,22 @@ const GlobalHeaderRight: React.FC = () => {
       document.removeEventListener('MSFullscreenChange', escFunction)
     }
   })
-
+    const headerDropdownConfig = [
+        {
+            label: '文档',
+            key: 'wendang1',
+            onClick:() => {
+                 window.open('/~docs')
+            }
+        },
+        {
+            label: 'Ant Design Pro 文档',
+            key: 'wendang2',
+            onClick:() => {
+                window.open('https://pro.ant.design/docs/getting-started')
+            }
+        }
+    ]
   return (
     <Space className={className}>
       <HeaderSearch
@@ -77,24 +92,7 @@ const GlobalHeaderRight: React.FC = () => {
       <HeaderDropdown
         className={classes.action}
         overlay={
-          <Menu>
-            <Menu.Item
-              key='wendang1'
-              onClick={() => {
-                window.open('/~docs')
-              }}
-            >
-              文档
-            </Menu.Item>
-            <Menu.Item
-              key='wendang2'
-              onClick={() => {
-                window.open('https://pro.ant.design/docs/getting-started')
-              }}
-            >
-              Ant Design Pro 文档
-            </Menu.Item>
-          </Menu>
+          <Menu items={headerDropdownConfig} />
         }
       >
         <span>

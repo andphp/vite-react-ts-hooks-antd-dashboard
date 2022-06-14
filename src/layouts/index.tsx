@@ -49,7 +49,7 @@ const LayoutPage: FC = () => {
       })
     }
   }, [menuList])
-  console.log('777777777777', location.pathname)
+
   useEffect(() => {
     if (currentUser) {
       setUser({ ...user, username: currentUser?.fullName || currentUser?.nickName || currentUser?.accountName || '', logged: true })

@@ -104,7 +104,7 @@ axios.interceptors.response.use(
             description: error.response.data?.data || 'Error'
           })
           history.push('/login')
-          setTimeout(() => window.location.reload(), 2000)
+          // setTimeout(() => window.location.reload(), 2000)
           break
         case 403:
           Storage.remove('accessToken')
@@ -113,7 +113,7 @@ axios.interceptors.response.use(
             description: error.response.data?.data || 'Error'
           })
           history.push('/login')
-          setTimeout(() => window.location.reload(), 2000)
+          // setTimeout(() => window.location.reload(), 2000)
           break
         // 404请求不存在
         case 404:
