@@ -269,13 +269,16 @@ const TabRoute = function(clickChangeMaximize: React.MouseEventHandler<HTMLEleme
   })
 
   return (
-    <Tabs id={tabsDivId.current} activeKey={location.pathname} onChange={(key) => selectTab(key)} tabBarExtraContent={operations} tabBarStyle={{ background: '#fff', margin: '0' }} tabPosition='top' animated tabBarGutter={0} hideAdd type='editable-card' onEdit={(targetKey) => closeTab(targetKey)}>
-      {[...tabList.current.values()].map((item) => (
-        <TabPane style={{ padding: '16px 0 0 16px' }} tab={item.name} key={item.key}>
-          <Suspense fallback={<PageLoading />}>{reload ? <PageLoading /> : item.page}</Suspense>
-        </TabPane>
-      ))}
-    </Tabs>
+      <div style={{position:'relative',width:'100%'}}>
+        <Tabs id={tabsDivId.current} activeKey={location.pathname} onChange={(key) => selectTab(key)} tabBarExtraContent={operations} tabBarStyle={{ background: '#fff', margin: '0' }} tabPosition='top' animated tabBarGutter={0} hideAdd type='editable-card' onEdit={(targetKey) => closeTab(targetKey)}>
+          {[...tabList.current.values()].map((item) => (
+              <TabPane style={{ padding: '16px 0 0 16px' }} tab={item.name} key={item.key}>
+                <Suspense fallback={<PageLoading />}>{reload ? <PageLoading /> : item.page}</Suspense>
+              </TabPane>
+          ))}
+        </Tabs>
+      </div>
+
   )
 }
 

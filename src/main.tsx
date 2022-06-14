@@ -8,7 +8,7 @@ import axios, { AxiosContext } from './utils/request'
 import '@/styles/index.css'
 import App from './App'
 import { ErrorBoundary } from 'react-error-boundary'
-import SuspendFallbackLoading from '@/components/loading'
+import SuspendFallbackLoading from '@/components/loading/suspend-fallback-loading'
 import 'nprogress/nprogress.css'
 // import 'default-passive-events'
 
