@@ -33,7 +33,7 @@ declare namespace Menu {
 
   export interface TreeItem extends Item {
     /** 子菜单 */
-    children: TreeChild[],
+    children: TreeItem[],
     locale?: string,
     /** menu labels */
     label: {

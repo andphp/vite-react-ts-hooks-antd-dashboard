@@ -3,5 +3,7 @@ declare namespace Antd {
         key: string
         icon: React.ReactElement
         label: string
+        title?: string
+        children?: Menu[]
     }
 }

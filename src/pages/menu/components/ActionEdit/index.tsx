@@ -1,10 +1,18 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Button, Empty, Form, Input, Space } from 'antd'
+import {Button, Empty, Form, Input, Space} from 'antd'
 import styles from './../../style.module.less'
 import { Content } from 'antd/lib/layout/layout'
 
-const ActionEdit:React.FC = (props) => {
+interface childProps {
+  isAdd: boolean
+  selectedMenu: any
+  onSubmit: Function
+  onValuesChange: (changedValues: any, values: any) => void
+}
+
+const ActionEdit:React.FC<childProps>  = (props) => {
   const [form] = Form.useForm()
+  // @ts-ignore
   const { isAdd, selectedMenu, onSubmit, onValuesChange } = props
   const [loading, setLoading] = useState(false)
 

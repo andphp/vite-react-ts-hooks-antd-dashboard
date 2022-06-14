@@ -127,7 +127,7 @@ const MenuEdit:React.FC<childProps> = (props) => {
   }
 
   const handleSubmit = useCallback(
-    async (values) => {
+    async (values: any) => {
       if (loading) return
       console.log('values', values)
     },
@@ -143,7 +143,7 @@ const MenuEdit:React.FC<childProps> = (props) => {
       className={styles.pane}
       name={`menu-form`}
       form={form}
-      onFinish={handleSubmit}
+      onFinish={(info) => handleSubmit(info)}
       onValuesChange={onValuesChange}
       initialValues={{ enabled: true }}
     >

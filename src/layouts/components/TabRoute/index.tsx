@@ -26,7 +26,7 @@ const TabRoute = function(clickChangeMaximize: React.MouseEventHandler<HTMLEleme
   const { formatMessage } = useLocale()
 
   const [reload, setReload] = useState(false)
-  const initMenuList = (pathname: string, menuList: Menu.MenuTree | undefined) => {
+  const initMenuList = (pathname: string, menuList: Menu.Tree | undefined) => {
     if (!menuList) return false
     menuList.forEach((m) => {
       if (m?.path == pathname) {
@@ -40,7 +40,7 @@ const TabRoute = function(clickChangeMaximize: React.MouseEventHandler<HTMLEleme
     return false
   }
 
-  console.log('TabRoute', location.pathname)
+  // console.log('TabRoute', location.pathname)
   // 初始化菜单路由
   const { data: menuList } = useGetCurrentMenus()
   // 确保tab

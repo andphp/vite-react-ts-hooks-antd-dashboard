@@ -4,7 +4,7 @@ import {Logged} from '@/utils/helper'
 
 
 const PrivateRoute: FC<RouteProps> = ({ children, ...props }) => {
-  console.log("PrivateRoute", props)
+  // console.log("PrivateRoute", props)
   return Logged() ? (
       <div>{children}</div>
   ) : <Navigate to="/login" />

@@ -1,4 +1,4 @@
-import { useCreate, useGetList, useGetOne } from '@/utils/request'
+import {useCreate, useGetList, useGetOne} from '@/utils/request'
 
 // 公共接口
 export const useLogin = () => {
@@ -10,9 +10,7 @@ export const useGetCurrentUser = () => {
 }
 
 export const useGetCurrentMenus = () => {
-  const menus = useGetList<Menu.Tree>('CurrentMenuList', '/current/menu')
-  console.log('=========menus', menus)
-  return menus
+  return useGetList<Menu.Tree>('CurrentMenuList', '/current/menu')
 }
 
 export const useGetDomainList = (pagination?: any, filters?: any, sorter?: any) => { // 获取域名列表
