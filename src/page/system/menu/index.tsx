@@ -8,7 +8,7 @@ export default function MenuPage() {
   }
   return (
     <div>
-      <p>MenuPage</p>
+      <p>MenuPage 测试 缓存页</p>
       <Button type='primary' onClick={submitHandle}>num{num}</Button>
     </div>
   )
