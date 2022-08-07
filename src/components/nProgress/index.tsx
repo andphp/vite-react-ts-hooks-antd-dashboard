@@ -1,17 +1,13 @@
-import React, { FC, Fragment, JSXElementConstructor, ReactElement, useEffect, useState } from 'react'
+import React, { FC, Fragment, useEffect } from 'react'
 import nProgress from 'nprogress'
-import { RouteProps } from 'react-router-dom'
-export interface NProgressWithProps extends RouteProps {
-  element: ReactElement<any, string | JSXElementConstructor<any>> | null
-  path: string
-}
-const NProgressWithNode: FC<NProgressWithProps> = ({ element, path }) => {
-  useState(nProgress.start())
+import 'nprogress/nprogress.css'
+
+const NProgressWithNode: FC = () => {
   useEffect(() => {
-    nProgress.done()
-    return () => { nProgress.start() }
+    nProgress.start()
+    return () => { nProgress.done() }
   })
-  return <Fragment key={path}>{element}</Fragment>
+  return <Fragment />
 }
 
 export default NProgressWithNode

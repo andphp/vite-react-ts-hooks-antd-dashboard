@@ -1,24 +1,28 @@
-import { localeConfig } from '@/configs/locale'
+import { localeConfig } from '@/config/locale'
 import { ConfigProvider } from 'antd'
-import enUS from 'antd/es/locale/en_US'
-import zhCN from 'antd/es/locale/zh_CN'
-// import { createBrowserHistory } from 'history'
-import moment from 'moment'
+
 import 'moment/dist/locale/zh-cn'
-import React, { useEffect } from 'react'
+import React, { useEffect, Suspense } from 'react'
 import { IntlProvider } from 'react-intl'
-import { BrowserRouter } from 'react-router-dom'
+import { HashRouter } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import '@/styles/App.less'
-import RenderRouter from './routers'
-import { userState } from '@/stores/atoms/user'
-// const history = createBrowserHistory()
+import { globalAtom } from '@/store'
+import moment from 'moment'
+import enUS from 'antd/es/locale/en_US'
+import zhCN from 'antd/es/locale/zh_CN'
+import { initLoadIcon, initNotification } from './utils/init'
+// import ILayout from '@/components/layout'
+import { AutoRoutes } from '@/router'
+import NProgressWithNode from '@/components/nProgress'
 
-const App: React.FC = () => {
-  const [user, _] = useRecoilState(userState)
-  const { locale } = user
+export default function App() {
+  const [locale] = useRecoilState(globalAtom.locale)
 
-  // const { data: currentUser } = useGetCurrentUser()
+  useEffect(() => {
+    initNotification()
+    initLoadIcon()
+  }, [])
 
   useEffect(() => {
     if (locale.toLowerCase() === 'en-us') {
@@ -35,24 +39,24 @@ const App: React.FC = () => {
       return zhCN
     }
   }
-
   const getLocale = () => {
     const lang = localeConfig.find((item) => {
       return item.key === locale.toLowerCase()
     })
-
     return lang?.messages
   }
 
   return (
     <ConfigProvider locale={getAntdLocale()} componentSize='middle'>
       <IntlProvider locale={locale.split('-')[0]} messages={getLocale()}>
-        <BrowserRouter>
-          <RenderRouter />
-        </BrowserRouter>
+        <div className='App'>
+          <HashRouter>
+            <Suspense fallback={<NProgressWithNode></NProgressWithNode>}>
+              <AutoRoutes></AutoRoutes>
+            </Suspense>
+          </HashRouter>
+        </div>
       </IntlProvider>
     </ConfigProvider>
   )
 }
-
-export default App

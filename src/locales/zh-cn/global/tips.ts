@@ -22,5 +22,5 @@ export const zhCN_globalTips = {
   'gloabal.tips.tabs.reloadTab': '重新加载',
   'gloabal.tips.tabs.tabMaximization': '最大化',
   'gloabal.tips.tabs.restore': '还原',
-  'gloabal.topLevelMenu.divider.title.other': '其他'
+  'gloabal.topLevelMenu.divider.title.other': '单页子项'
 }

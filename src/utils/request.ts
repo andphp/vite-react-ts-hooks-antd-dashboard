@@ -1,149 +1,66 @@
-import { message, notification } from 'antd'
-import Axios, { AxiosInstance, AxiosRequestConfig, AxiosRequestTransformer } from 'axios'
-
-import { createBrowserHistory } from 'history'
+import Axios, { AxiosInstance } from 'axios'
 import qs from 'qs'
+import { message, Modal } from 'antd'
+import { tokenFn } from './token'
 import { createContext, useContext } from 'react'
-import { useMutation, useQuery } from 'react-query'
-import { JsonToSnake } from './string-format'
+import config from '@/config'
 
-import Storage from './storage'
-import config from '@/configs'
-
-enum ResultCode {
-  SUCCESS,
-  ERROR = 7,
-  SYSTEM_ERROR = 100000,
-  PARAMS_ERROR
-}
-
-const history = createBrowserHistory()
-// const navigate = useNavigate()
-// console.log('baseurl:', config.baseURL)
-const axios = Axios.create({
+const request = Axios.create({
   baseURL: String(config.baseURL),
-  timeout: 5000,
   headers: {
-    'Content-Type': 'application/x-www-form-urlencoded'
+    'Content-Type': 'application/json;charset=UTF-8'
   }
 })
 
-axios.interceptors.request.use((config: AxiosRequestConfig) => {
-  // Storage.set('accessToken', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0Ojk1MDEvYmFja2VuZC9sb2dpbiIsImlhdCI6MTY1NDgzOTk2MywiZXhwIjoxNjU0ODQzNTYzLCJuYmYiOjE2NTQ4Mzk5NjMsImp0aSI6Im11WnZlbHgyQ1NqZjJWeUkiLCJzdWIiOiIxIiwicHJ2IjoiMGMxNGNhMDdlMzVhYTlkMzFlZDJhZDA1YjI1ZmVlYmE5MDA1MWNkYSIsImlkIjoxLCJhY2NvdW50X25hbWUiOiJhZG1pbiJ9.Qe1BASgGarg8IBbFT7ljTe1CitDnvRLLr-rbLq-mJCxAU0QZ2F1r-eFyWlCniecxuR7k3xzRwDxsN37hu5I1cQ')
-  const token = Storage.get('accessToken', false)
-  if (token) {
-    // config.headers = { Authorization: `Bearer ${token}` }
-    config.headers = { Authorization: `Bearer ${token}` }
-    // config.headers = { 'x-token': token }
-  }
-
-  // 每次请求带上时间戳 防刷处理
-  if (config.method === 'get') {
-    config.params = {
-      ...config.params,
-      // @ts-ignore
-      timestamp: Date.parse(new Date()) / 1000
+request.interceptors.request.use(
+  (config) => {
+    config.headers = {
+      ...config.headers,
+      Authorization: config.headers?.Authorization || (tokenFn.get() as string)
     }
-  }
-  return config
-}, (error: any) => {
-  return Promise.reject(error)
-})
-
-// response interceptor
-axios.interceptors.response.use(
-  (response: { data: any; status: number; statusText: any }) => {
-    const data = response.data
-    // console.log('response:', response)
-    if (response.status === 200) {
-      switch (data.code) {
-        case ResultCode.SUCCESS:
-          return data
-
-        case ResultCode.PARAMS_ERROR:
-          if (typeof data?.data == 'string') {
-            message.warning(data.data).then(() => {})
-          }
-          if (typeof data?.data == 'object') {
-            const values: any[] = Object.values(data?.data)
-            values.forEach((value) => {
-              message.warning(value).then(() => {})
-            })
-          }
-          return null
-
-        default:
-          const resultData = data?.data
-          let resultMsg: string = data.msg
-          if (resultData && Object.keys(resultData).length > 0) {
-            resultMsg = JSON.stringify(resultData)
-          }
-          message.warning(resultMsg).then(() => {})
-          return null
-      }
+    if (config.headers?.['Content-Type'] === 'application/x-www-form-urlencoded') {
+      config.data = qs.stringify(config.data)
     }
-    // console.log('statusText', response.statusText)
-    // notification.error({
-    //   message: `请求错误 ${response.statusText}: ${response}`,
-    //   description: data || response.statusText || 'Error'
-    // })
 
-    return Promise.reject(new Error(response.statusText || 'Error'))
+    return config
   },
-  (error: { response: { status: number; data: { msg: any; data: any } } }) => {
-    if (error.response?.status) {
-      switch (error.response.status) {
-        // 403 token过期
-        // 401: 未登录
-        // 未登录则跳转登录页面，并携带当前页面的路径
-        // 在登录成功后返回当前页面，这一步需要在登录页操作。
-        case 401:
-          Storage.remove('accessToken')
-          notification.error({
-            message: error.response.data?.msg || 'Error',
-            description: error.response.data?.data || 'Error'
-          })
-          history.push('/login')
-          // setTimeout(() => window.location.reload(), 2000)
-          break
-        case 403:
-          Storage.remove('accessToken')
-          notification.error({
-            message: error.response.data?.msg || 'Error',
-            description: error.response.data?.data || 'Error'
-          })
-          history.push('/login')
-          // setTimeout(() => window.location.reload(), 2000)
-          break
-        // 404请求不存在
-        case 404:
-          notification.error({
-            message: `请求不存在`,
-            description: error.response.data?.data || 'Error'
-          })
-          break
-        case 406:
-          notification.error({
-            message: `请求参数有误`,
-            description: error.response.data?.data || 'Error'
-          })
-          break
-        default:
-          notification.error({
-            message: `请求错误`,
-            description: error.response.data?.data || 'Error'
-          })
+  (err) => Promise.reject(err)
+)
+
+request.interceptors.response.use(
+  (response) => {
+    if (response.status === 200) {
+      // if (response.config.url === '/login') {
+      //   return Promise.resolve(response.data)
+      // }
+      if (response.data.code === 0) {
+        return Promise.resolve(response.data.data)
+      } else {
+        message.error(response.data.msg)
       }
     }
-
-    // throw new Error(error);
-    return Promise.reject(error.response.data)
-    // return null
+    return Promise.reject(response)
+  },
+  (err) => {
+    console.log('response.config.ureerl===', err.response.config)
+    if (err.response && err.response.status === 401) {
+      Modal.info({
+        title: '会话超时，请重新登陆！',
+        maskClosable: false,
+        onOk() {
+          tokenFn.remove()
+          window.location.reload()
+        }
+      })
+      return Promise.resolve()
+    }
+    const msg = err.response?.data?.msg || err.message || 'error!'
+    return Promise.reject(msg)
   }
 )
 
 export const AxiosContext = createContext<AxiosInstance>(
-  new Proxy(axios, {
+  new Proxy(request, {
     apply: () => {
       throw new Error('You must wrap your component in an AxiosProvider')
     },
@@ -157,133 +74,4 @@ export const useAxios = () => {
   return useContext(AxiosContext)
 }
 
-const transformPagination = (pagination: any) => {
-  if (!pagination) return
-
-  const current = pagination.current ? pagination.current : pagination.defaultCurrent
-  const pageSize = pagination.pageSize ? pagination.pageSize : pagination.defaultPageSize
-
-  // let offset = 0
-  // if (current && pageSize) {
-  //   offset = (current - 1) * pageSize
-  // }
-
-  return {
-    page: current,
-    pageSize
-  }
-}
-
-// const transformFilters = (filters: any) => {
-//   if (!filters) return
-//   let result: any[] = []
-//   for (const key in filters) {
-//     if (!filters[key] || filters[key] === null) continue
-//     result = [...result, [key + ':eq:' + filters[key]]]
-//   }
-//   return result
-// }
-
-// const transformSorter = (sorter: any) => {
-//   if (!sorter) return
-//
-//   let result = ''
-//   if (sorter.field && sorter.order) {
-//     let order = 'desc'
-//     if (sorter.order === 'ascend') order = 'asc'
-//     result = sorter.field + ' ' + order
-//   }
-//
-//   return result
-// }
-
-const transformParams = (obj: any) => {
-  if (!obj) return {}
-  return JsonToSnake(obj)
-}
-
-const useGetList = <T>(key: string, url: string, filters?: any, sorter?: any) => {
-  const axios = useAxios()
-  const params = filters || sorter ? transformParams(Object.assign(filters, sorter)) : {} // transformFilters(filters)
-
-  const service = async () => {
-    // console.log('--params: ', params)
-    return await axios.get(`${url}`, {
-      params,
-      paramsSerializer: (params) => {
-        return qs.stringify(params, { arrayFormat: 'repeat' })
-      }
-    }).then((res) => {
-      console.log('--res: ', res)
-      return res.data as T | undefined
-    }).catch((error) => {
-      console.log('--error: ', error)
-      return error
-    })
-  }
-  return useQuery(key, () => service())
-}
-
-const useGetPageList = <T>(key: string, url: string, pagination?: any, filters?: any, sorter?: any) => {
-  const axios = useAxios()
-
-  const service = async () => {
-    const page = { ...transformPagination(pagination) }
-    const params = transformParams(Object.assign(page, filters, sorter))
-    const transformRequest: AxiosRequestTransformer = (data, headers) => {}
-    // console.log('--params: ', params)
-    return await axios.get(`${url}`, {
-      params,
-      paramsSerializer: (params) => {
-        return qs.stringify(params, { arrayFormat: 'repeat' })
-      },
-      transformRequest
-    })
-  }
-  return useQuery(key, () => service())
-}
-
-const useGetOne = <T>(key: string, url: string, params?: any) => {
-  const axios = useAxios()
-
-  const service = async () => {
-    return await axios.get(`${url}`, params).then((res) => {
-      return res.data as T | undefined
-    })
-  }
-  return useQuery(key, () => service())
-}
-
-const useCreate = <T, U>(url: string) => {
-  const axios = useAxios()
-  return useMutation(async (params: T) => {
-    return await axios.post(`${url}`, qs.stringify(params)).then((res) => {
-      return res.data as U
-    })
-  })
-}
-
-const useUpdate = <T>(url: string) => {
-  const axios = useAxios()
-  return useMutation(async (item: T) => {
-    return await axios.patch(`${url}`, item)
-  })
-}
-
-const useDelete = <T>(url: string) => {
-  const axios = useAxios()
-  return useMutation(async (id: number) => {
-    return await axios.delete(`${url}?id=${id}`)
-  })
-}
-
-const useBatch = (url: string) => {
-  const axios = useAxios()
-  return useMutation(async (ids: number[]) => {
-    return await axios.post(`${url}`, { idList: ids })
-  })
-}
-
-export { useGetOne, useGetList, useGetPageList, useUpdate, useCreate, useDelete, useBatch }
-
-export default axios
+export default request

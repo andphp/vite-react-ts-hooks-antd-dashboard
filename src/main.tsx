@@ -1,16 +1,15 @@
-import React, { Suspense, useMemo } from 'react'
+import React, { Suspense } from 'react'
 import ReactDOM from 'react-dom/client'
-import { QueryClient, QueryClientProvider } from 'react-query'
-// import { ReactQueryDevtools } from 'react-query-devtools'
 import { RecoilRoot } from 'recoil'
-import axios, { AxiosContext } from './utils/request'
-
-import '@/styles/index.css'
-import App from './App'
-import { ErrorBoundary } from 'react-error-boundary'
+import App from '@/App'
+import '@/styles/index.less'
+import 'default-passive-events' // Chrome51 版本以后，Chrome 增加了新的事件捕获机制－Passive Event Listeners；
+// import { ErrorBoundary } from 'react-error-boundary'
 import SuspendFallbackLoading from '@/components/loading/suspend-fallback-loading'
-import 'nprogress/nprogress.css'
-// import 'default-passive-events'
+import { QueryClient, QueryClientProvider } from 'react-query'
+
+const rootElement = document.getElementById('root')
+if (!rootElement) throw new Error('Failed to find the root element')
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -25,36 +24,16 @@ const queryClient = new QueryClient({
   }
 })
 
-const AxiosProvider = ({ children }: React.PropsWithChildren<unknown>) => {
-  const axiosValue = useMemo(() => {
-    return axios
-  }, [])
-
-  return <AxiosContext.Provider value={axiosValue}>{children}</AxiosContext.Provider>
-}
-const rootElement = document.getElementById('root')
-if (!rootElement) throw new Error('Failed to find the root element')
 ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
-  <AxiosProvider>
     <QueryClientProvider client={queryClient}>
       <RecoilRoot>
-        <ErrorBoundary
-          fallbackRender={({ error, resetErrorBoundary }) => (
-            <div>
-                            There was an error! <button onClick={() => resetErrorBoundary()}>Try again</button>
-              <pre style={{ whiteSpace: 'normal' }}>{error.message}</pre>
-            </div>
-          )}
-        >
-          <Suspense fallback={<SuspendFallbackLoading/>}>
-            <App/>
-            {/* ↓ 可视化开发工具 */}
-            {/* <ReactQueryDevtools /> */}
-          </Suspense>
-        </ErrorBoundary>
+        <Suspense fallback={<SuspendFallbackLoading/>}>
+          <App/>
+          {/* ↓ 可视化开发工具 */}
+          {/* <ReactQueryDevtools /> */}
+        </Suspense>
       </RecoilRoot>
     </QueryClientProvider>
-  </AxiosProvider>
-   </React.StrictMode>,
+  </React.StrictMode>
 )

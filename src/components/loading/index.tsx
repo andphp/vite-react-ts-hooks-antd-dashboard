@@ -179,9 +179,8 @@ const Loading : FC = () => {
           </g>
         </svg>
       </div>
+      <div className='h1'>Loading</div>
     </div>
-
-    <div className='h1'>Loading</div>
   </div>
 }
 

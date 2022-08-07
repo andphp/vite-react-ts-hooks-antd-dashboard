@@ -5,12 +5,11 @@ import './index.less'
 import { useLocale } from '@/locales'
 
 import { useRecoilState } from 'recoil'
-import { userState } from '@/stores/atoms/user'
+import { globalAtom } from '@/store'
 
 export const useGuide = () => {
   const { formatMessage } = useLocale()
-  const [user, setUser] = useRecoilState(userState)
-
+  const [user, setUser] = useRecoilState(globalAtom.user)
   const driver = useRef(
     new Driver({
       animate: false,
@@ -33,19 +32,19 @@ export const useGuide = () => {
             title: formatMessage({ id: 'app.guide.driverStep.sidebarTrigger.title' }),
             description: formatMessage({ id: 'app.guide.driverStep.sidebarTrigger.description' }),
             position: 'top',
-            offset: 10,
-            isFirst: true
-          }
-        },
-        {
-          element: '#language-change',
-          popover: {
-            title: formatMessage({ id: 'app.guide.driverStep.switchLanguages.title' }),
-            description: formatMessage({ id: 'app.guide.driverStep.switchLanguages.description' }),
-            position: 'bottom-right',
-            offset: -10
+            offset: 10
+            // isFirst: true
           }
         }
+        // {
+        //   element: '#language-change',
+        //   popover: {
+        //     title: formatMessage({ id: 'app.guide.driverStep.switchLanguages.title' }),
+        //     description: formatMessage({ id: 'app.guide.driverStep.switchLanguages.description' }),
+        //     position: 'bottom-right',
+        //     offset: -10
+        //   }
+        // }
       ])
 
       localStorage.setItem('newUser', 'false')

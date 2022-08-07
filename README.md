@@ -1,3 +1,20 @@
+# 介绍
+
+> 基于vite、react18、ts、hooks、antd、react-query、recoil等（非ANT DESIGN PRO）开箱即用管理后台模板
+
+## 演示地址
+
+## 项目依赖
+* "antd",
+* "recoil",
+* "admin",
+* "tabs",
+* "hook",
+* "react-router-dom6",
+* "react",
+* "react-query",
+* "vite"
+
 # 项目启动
 
 ## 安装yarn
@@ -17,15 +34,16 @@ yarn dev
 ## 目录结构
 ```
 |- src
-    |- assets 资源文件（images/svg）
+    |- @type 类型声明文件
+    |- api 接口请求实现
+    |- assets 资源文件（img/svg）
     |- components 通用组件
-    |- configs 配置文件、环境差异配置
-    |- declares 声明文件
-    |- https 远程调用接口
-    |- layouts 布局组件
+    |- config 配置文件、环境差异配置
+    |- hooks 钩子函数库
+    |- layout 布局组件
     |- locales 国际化文件
-    |- pages 页面组件
-    |- routers 路由配置
+    |- page 页面组件
+    |- router 路由配置
     |- stors 状态管理
     |- utils 工具函数
 ```
