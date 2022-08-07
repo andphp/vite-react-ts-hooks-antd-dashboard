@@ -106,7 +106,7 @@ export default function SiderMenu() {
     }
     return (
       <>
-        <img alt='logo' src='/src/assets/img/logo.png'/>
+        <img alt='logo' src='src/assets/img/logo.png'/>
         {/* <div style={{ fontSize: 24, fontWeight: 700, transform: 'scale(1,1.25)' }}>*/}
         {/*  &nbsp; BOOKING*/}
         {/* </div>*/}
