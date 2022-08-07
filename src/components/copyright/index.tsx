@@ -1,3 +1,5 @@
+import React from 'react'
+
 const CopyRight: React.FC<any> = () => {
   return (
     <span
