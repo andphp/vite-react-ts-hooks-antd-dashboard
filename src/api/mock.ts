@@ -5,7 +5,7 @@ export const code = {
   repCode: 0,
   repData: {
     jigsawImageBase64: '/src/assets/img/slider-bg.jpg',
-    originalImageBase64: '/src/assets/img/slider-bg.jpg',
+    originalImageBase64: '/assets/slider-bg.jpg',
     result: true,
     secretKey: '',
     token: '',
