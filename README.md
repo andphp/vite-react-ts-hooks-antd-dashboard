@@ -3,6 +3,8 @@
 > 基于vite、react18、ts、hooks、antd、react-query、recoil等（非ANT DESIGN PRO）开箱即用混合模式，支持多标签的管理后台模板
 ## 演示地址
 
+ > [https://vite-react-ts-hooks-antd-dashboard.vercel.app/](https://vite-react-ts-hooks-antd-dashboard.vercel.app/)
+
 ## 项目依赖
 * "antd",
 * "recoil",
