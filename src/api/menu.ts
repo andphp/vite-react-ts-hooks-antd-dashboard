@@ -5,6 +5,6 @@ export default {
   // getCurrentMenu: () => request.get<any, NSP.Menu[]>('/admin/menu')
   getCurrentMenu: () => {
     return menus
-    // return request.get<any, NSP.Menu>('/current/menu')
+    // return request.get<any, NSP.Menu[]>('/current/menu')
   }
 }

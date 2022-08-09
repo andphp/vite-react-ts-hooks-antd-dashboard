@@ -6,8 +6,8 @@ export const blue = {
   }
 }
 export const green = {
-  loginBackground: '/src/assets/img/login-bg.jpeg',
-  loginLogo: '/src/assets/img/logo-1.png',
+  loginBackground: './../../src/assets/img/login-bg.jpeg',
+  loginLogo: './../../src/assets/img/logo-1.png',
   lessVars: {
     '@primary-color': '#009688'
   }

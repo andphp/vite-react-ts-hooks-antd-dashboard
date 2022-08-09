@@ -13,15 +13,7 @@ export default {
     // console.log(config, data)
     if (diff > 160 && diff < 210) {
       return Promise.resolve({
-        repCode: 0,
-        repData: {
-          jigsawImageBase64: '/src/assets/img/slider-bg.jpg',
-          originalImageBase64: '/src/assets/img/slider-bg.jpg',
-          result: true,
-          secretKey: '',
-          token: '',
-          success: true
-        }
+        repCode: 0
       })
     } else {
       // eslint-disable-next-line prefer-promise-reject-errors

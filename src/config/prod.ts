@@ -1,7 +1,7 @@
 export default {
   appid: '',
-  host: '',
+  host: 'localhost:9501',
   token: 'this is token',
-  baseURL: '/api',
+  baseURL: '/backend',
   tenant_id: 'administration'
 }

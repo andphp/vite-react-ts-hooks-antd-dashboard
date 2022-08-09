@@ -30,9 +30,7 @@ const KeepAlive = (props: { children: any}) => {
   const [firstOne, setFirstOne] = useState(true)
 
   useEffect(() => {
-    return () => {
-      setFirstOne(false)
-    }
+    setFirstOne(false)
   }, [])
 
   useEffect(() => {
@@ -45,10 +43,12 @@ const KeepAlive = (props: { children: any}) => {
     componentList.current.forEach((value, key) => {
       const _key = key.split('__')[0]
       // console.log('--------------useEffectupdateReducer========', updateReducer)
-      // console.log('--------------_key========', _key)
+      console.log('--------------_key========', _key)
       // console.log('--------------pathname========', pathname)
-      // console.log('--------------!navMenus.includes(_key)========', !cacheRoutes.includes(_key))
+      console.log('--------------!navMenus.includes(_key)========', !cacheRoutes.includes(_key))
       // console.log('--------------(_key === pathname)========', (_key === pathname))
+      console.log('--------------updateReducer========', updateReducer)
+      console.log('--------------firstOne========', firstOne)
       if (!cacheRoutes.includes(_key) || updateReducer || firstOne) {
         componentList.current.delete(key)
         storage.current.delete(_key)

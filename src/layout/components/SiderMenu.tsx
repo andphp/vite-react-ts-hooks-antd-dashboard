@@ -6,6 +6,7 @@ import { useRecoilValue } from 'recoil'
 import { globalAtom, globalSelector } from '@/store'
 import type { ItemType } from 'antd/lib/menu/hooks/useItems'
 import Icon from '@/components/icon'
+import logoPic from '@/assets/img/logo.png'
 
 export default function SiderMenu() {
   const navigate = useNavigate()
@@ -102,11 +103,11 @@ export default function SiderMenu() {
 
   const Logo = useMemo(() => {
     if (collapsed) {
-      return <img style={{ width: '59px', height: '45px' }} alt='logo' src='/src/assets/img/logo_min.png'/>
+      return <img style={{ width: '59px', height: '45px' }} alt='logo' src={logoPic}/>
     }
     return (
       <>
-        <img alt='logo' src='/src/assets/img/logo.png'/>
+        <img alt='logo' src={logoPic}/>
         {/* <div style={{ fontSize: 24, fontWeight: 700, transform: 'scale(1,1.25)' }}>*/}
         {/*  &nbsp; BOOKING*/}
         {/* </div>*/}
